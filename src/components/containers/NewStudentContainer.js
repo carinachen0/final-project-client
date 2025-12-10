@@ -20,9 +20,13 @@ class NewStudentContainer extends Component {
     this.state = {
       firstname: "", 
       lastname: "", 
+      email: "",
+      imageUrl: "",
+      gpa: "",
       campusId: null, 
       redirect: false, 
-      redirectId: null
+      redirectId: null,
+      errors: {}
     };
   }
 
@@ -33,6 +37,18 @@ class NewStudentContainer extends Component {
     });
   }
 
+    // Validate inputs entered in form 
+  validateForm = () => {
+    const { firstname, lastname, email, gpa } = this.state;
+    const errors = {};
+    if (!firstname) errors.firstname = "First name is required!";
+    if (!lastname) errors.lastname = "Last name is required!";
+    if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) errors.email = "Entered invalid email format!";
+    if (gpa && (gpa < 0.0 || gpa > 4.0 || isNaN(gpa))) errors.gpa = "GPA must be a number betwen 0.0 and 4.0!"; //out of range OR not a number
+    this.setState({ errors });
+    return Object.keys(errors).length === 0;
+  };
+
   // Take action after user click the submit button
   handleSubmit = async event => {
     event.preventDefault();  // Prevent browser reload/refresh after submit.
@@ -40,6 +56,9 @@ class NewStudentContainer extends Component {
     let student = {
         firstname: this.state.firstname,
         lastname: this.state.lastname,
+        email: this.state.email,
+        imageUrl: this.state.imageUrl,
+        gpa: this.state.gpa || null, //gpa is an optional field
         campusId: this.state.campusId
     };
     
@@ -47,13 +66,18 @@ class NewStudentContainer extends Component {
     let newStudent = await this.props.addStudent(student);
 
     // Update state, and trigger redirect to show the new student
-    this.setState({
-      firstname: "", 
-      lastname: "", 
-      campusId: null, 
-      redirect: true, 
-      redirectId: newStudent.id
-    });
+    if (newStudent && newStudent.id) {
+      this.setState({
+        firstname: "", 
+        lastname: "", 
+        email: "",
+        imageUrl: "",
+        gpa: "",
+        campusId: null, 
+        redirect: true, 
+        redirectId: newStudent.id
+      });
+    }
   }
 
   // Unmount when the component is being removed from the DOM:
@@ -74,7 +98,9 @@ class NewStudentContainer extends Component {
         <Header />
         <NewStudentView 
           handleChange = {this.handleChange} 
-          handleSubmit={this.handleSubmit}      
+          handleSubmit={this.handleSubmit} 
+          studentData = {this.state} // passes state to view
+          errors = {this.state.errors}     
         />
       </div>          
     );
