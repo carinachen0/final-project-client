@@ -10,12 +10,10 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import EditStudentView from '../views/EditStudentView';
+import EditStudentsView from '../views/EditStudentsView';
 import { editStudentThunk, fetchStudentThunk } from '../../store/thunks';
-import { emphasize } from '@material-ui/core';
-import { fetchStudent } from '../../store/actions/actionCreators';
 
-class EditStudentContainer extends Component {
+class EditStudentsContainer extends Component {
   // Initialize state
   constructor(props){
     super(props);
@@ -120,7 +118,7 @@ class EditStudentContainer extends Component {
     return ( 
       <div>
         <Header />
-        <EditStudentView
+        <EditStudentsView
           handleChange = {this.handleChange}
           handleSubmit = {this.handleSubmit}
           studentData = {this.state} // passes state to view
@@ -146,6 +144,6 @@ const mapDispatch = (dispatch) => {
 }
 
 // Export store-connected container by default
-// EditStudentContainer uses "connect" function to connect to Redux Store and to read values from the Store 
+// EditStudentsContainer uses "connect" function to connect to Redux Store and to read values from the Store 
 // (and re-read the values when the Store State updates).
-export default connect(mapState, mapDispatch)(EditStudentContainer);
+export default connect(mapState, mapDispatch)(EditStudentsContainer);

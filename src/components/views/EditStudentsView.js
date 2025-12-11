@@ -25,8 +25,10 @@ const useStyles = makeStyles( () => ({
   },
 }));
 
-const EditStudentView = ({ studentData, handleChange, handleSubmit, errors }) => {
+const EditStudentsView = ({ studentData, handleChange, handleSubmit, errors }) => {
   const classes = useStyles();
+
+  if (!studentData) return <p>Loading student data...</p>;
 
   // Render a New Student view with an input form
   return (
@@ -35,16 +37,16 @@ const EditStudentView = ({ studentData, handleChange, handleSubmit, errors }) =>
       <h1>Edit Student</h1>
 
     {/*Form Title: dynamic students full name*/}
-      <div className={classes.root}>
-        <div className={classes.formContainer}>
-          <div className={classes.formTitle}>
+      
+    <div className={classes.formContainer}>
+        <div className={classes.formTitle}>
             <Typography style={{fontWeight: 'bold', fontFamily: 'Courier, sans-serif', fontSize: '20px', color: '#11153e'}}>
-              {studentData.firstname} {studentData.lastname}
+                {studentData.firstname} {studentData.lastname}
             </Typography>
-          </div>
+        </div>
         
         {/*Form*/}
-          <form style={{textAlign: 'center'}} onSubmit={(e) => handleSubmit(e)}>
+        <form style={{textAlign: 'center'}} onSubmit={(e) => handleSubmit(e)}>
             
             <div>     
                 <label style= {{color:'#11153e', fontWeight: 'bold'}}>First Name: </label>
@@ -53,8 +55,6 @@ const EditStudentView = ({ studentData, handleChange, handleSubmit, errors }) =>
                     name="firstname" 
                     value={studentData.firstname} // controlled input: always reflects current state / stored value
                     onChange ={(e) => handleChange(e)} 
-                    error={!!errors.firstname}
-                    helperText={errors.firstname}
                 />
                 <br/><br/>
             </div>  
@@ -77,6 +77,7 @@ const EditStudentView = ({ studentData, handleChange, handleSubmit, errors }) =>
                     name="email" 
                     value={studentData.email} // controlled input: always reflects current state / stored value
                     onChange ={(e) => handleChange(e)} 
+                    placeholder='first name'
                 />
                 <br/><br/>
             </div>  
@@ -117,13 +118,11 @@ const EditStudentView = ({ studentData, handleChange, handleSubmit, errors }) =>
             <Button variant="contained" color="primary" type="submit">
               Submit
             </Button>
-            <br/>
-            <br/>
+            <br/><br/>
           </form>
           </div>
-      </div>
-    </div>    
-  )
-}
+    </div>
+  );
+};
 
-export default EditStudentView;
+export default EditStudentsView;
