@@ -50,9 +50,38 @@ class EditStudentsContainer extends Component {
 
   // Capture input data when it is entered
   handleChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
+    const { name, value } = event.target;
+    this.setState({ [name]: value }, () => {
+    this.validateField(name, value); // trigger real-time validation after state updates
     });
+  };
+
+    // Real-time validation for a single field
+  validateField = (name, value) => {
+    const errors = { ...this.state.errors };
+
+    switch (name) {
+      case "firstname":
+        errors.firstname = value.trim() ? "" : "First name is required!";
+        break;
+      case "lastname":
+        errors.lastname = value.trim() ? "" : "Last name is required!";
+        break;
+      case "email":
+        errors.email = value && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value)
+          ? "Entered invalid email format!"
+          : "";
+        break;
+      case "gpa":
+        errors.gpa = value && (isNaN(value) || value < 0 || value > 4)
+          ? "GPA must be a number between 0.0 and 4.0!"
+          : "";
+        break;
+      default:
+        break;
+    }
+
+    this.setState({ errors });
   };
 
   // Validate inputs entered in form 
