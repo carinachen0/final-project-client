@@ -55,7 +55,10 @@ const EditStudentsView = ({ studentData, handleChange, handleSubmit, errors }) =
                     name="firstname" 
                     value={studentData.firstname} // controlled input: always reflects current state / stored value
                     onChange ={(e) => handleChange(e)} 
+                    placeholder="required"
                 />
+                {errors.firstname && <p style={{ color: 'red' }}>{errors.firstname}</p>}
+
                 <br/><br/>
             </div>  
 
@@ -66,7 +69,10 @@ const EditStudentsView = ({ studentData, handleChange, handleSubmit, errors }) =
                     name="lastname" 
                     value={studentData.lastname} // controlled input: always reflects current state / stored value
                     onChange ={(e) => handleChange(e)} 
+                    placeholder="required"
                 />
+                {errors.lastname && <p style={{ color: 'red' }}>{errors.lastname}</p>}
+
                 <br/><br/>
             </div>  
 
@@ -77,8 +83,9 @@ const EditStudentsView = ({ studentData, handleChange, handleSubmit, errors }) =
                     name="email" 
                     value={studentData.email} // controlled input: always reflects current state / stored value
                     onChange ={(e) => handleChange(e)} 
-                    placeholder='first name'
+                    placeholder="required (unique)"
                 />
+                  {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
                 <br/><br/>
             </div>  
 
@@ -89,6 +96,7 @@ const EditStudentsView = ({ studentData, handleChange, handleSubmit, errors }) =
                     name="imageUrl" 
                     value={studentData.imageUrl} // controlled input: always reflects current state / stored value
                     onChange ={(e) => handleChange(e)} 
+                    placeholder='optional'
                 />
                 <br/><br/>
             </div>  
@@ -101,6 +109,7 @@ const EditStudentsView = ({ studentData, handleChange, handleSubmit, errors }) =
                     value={studentData.gpa} // controlled input: always reflects current state / stored value
                     onChange ={(e) => handleChange(e)} 
                 />
+                {errors.gpa && <p style={{ color: 'red' }}>{errors.gpa}</p>}
                 <br/><br/>
             </div>  
 
