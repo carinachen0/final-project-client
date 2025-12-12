@@ -31,7 +31,7 @@ const App = () => {
         <Route exact path="/student/:id" component={StudentContainer} />
         <Route exact path="/editStudent/:id" component={EditStudentsContainer} />
         <Route exact path="/editCampus/:id" component={EditCampusContainer} />  
-        <Route exact path="/newCampus/:id" component={NewCampusContainer} /> 
+        <Route exact path="/newcampus" component={NewCampusContainer} /> 
 
       </Switch>        
     </div>
