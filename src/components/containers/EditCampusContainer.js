@@ -24,7 +24,7 @@ class EditCampusContainer extends Component {
       description: "",
       redirect: false, 
       redirectId: null,
-      errors: ""
+      errors: {}
     };
   }
 
@@ -131,6 +131,7 @@ class EditCampusContainer extends Component {
           handleChange = {this.handleChange}
           handleSubmit = {this.handleSubmit}
           campus = {this.props.campus}
+          errors={this.state.errors}
         />
       </div>
     );
