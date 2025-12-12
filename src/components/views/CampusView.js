@@ -5,18 +5,35 @@ The Views component is responsible for rendering web page with data provided by 
 It constructs a React component to display a single campus and its students (if any).
 ================================================== */
 import { Link } from "react-router-dom";
+import { unenrollStudentThunk } from "../../store/thunks";
 
 // Take in props data to construct the component
 const CampusView = (props) => {
-  const {campus, deleteStudent} = props;
+  const {campus, unenrollStudent} = props;
   
   // Render a single Campus view with list of its students
   return (
     <div>
       <h1>{campus.name}</h1>
-      <img src= {campus.imageUrl || 'https://macaulay.cuny.edu/wp-content/uploads/2016/07/college-of-staten-island-main-walkway-lamp-posts-fountain-214.jpg' } alt="campus image" />
+      <img src= {campus.imageUrl || 'https://image-static.collegedunia.com/public/college_data/images/studyabroad/appImage/college_2187_29-15:05_Purdue_University.jpeg' } alt="campus image" />
       <p>Address: {campus.address}</p>
       <p>Description: {campus.description}</p>
+      
+      <Link to={`/editCampus/${campus.id}`}>
+        <button>Edit Campus</button>
+      </Link>
+
+      {/* Enroll New Student */}
+      <Link to={`/newstudent?campusId=${campus.id}`}>
+        <button>Enroll New Student</button>
+      </Link>
+
+      <br />
+
+      {/* Enroll Registered Student */}
+      <Link to="/students">
+        <button>Enroll Registered Student</button>
+      </Link>
 
       <h2>Students:</h2>
       {campus.students.length === 0 ? (
@@ -32,9 +49,9 @@ const CampusView = (props) => {
               </Link> 
 
               {/* Delete Student Button */}        
-              <button onClick={() => deleteStudent(student.id)}>
+              <button onClick={() => unenrollStudent(student.id, campus.id)}>
                 Unenroll
-              </button>
+              </button>            
             </div>
           );
         })

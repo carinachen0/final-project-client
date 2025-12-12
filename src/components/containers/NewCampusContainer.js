@@ -1,3 +1,10 @@
+/*==================================================
+NewCampusContainer.js
+
+The Container component is responsible for stateful logic and data fetching, and
+passes data (if any) as props to the corresponding View component.
+If needed, it also defines the component's "connect" function.
+================================================== */
 import Header from './Header';
 import { Component } from 'react';
 import { connect } from 'react-redux';
@@ -52,11 +59,13 @@ class NewCampusContainer extends Component {
 
     // Validate inputs entered in form 
   validateForm = () => {
-    const { imageUrl, name, address, description } = this.state;
-    if (!imageUrl || !name || !address || !description) {
-        return false;
-    }
-    return true;
+    const { name, address } = this.state;
+    const errors = {};
+    //requires user to fill in name and addr , else form cannot submit
+    if (!name) errors.name = "Campus name is required!";
+    if (!address) errors.address = "Campus address is required!";
+    this.setState({ errors });
+    return Object.keys(errors).length === 0;
   };
 
   // Take action after user click the submit button
@@ -64,12 +73,12 @@ class NewCampusContainer extends Component {
     event.preventDefault();  // Prevent browser reload/refresh after submit.
 
     if (!this.validateForm()) {
-        this.setState({ errors: "Missing information. Please fill out all the fields!"});
-        return;
+      // validation failed, errors are already set in state
+      return;
     }
 
     let campus = {
-        imageUrl: this.state.imageUrl,
+        imageUrl: this.state.imageUrl || undefined,
         name: this.state.name,
         address: this.state.address, 
         description: this.state.description
