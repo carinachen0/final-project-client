@@ -74,6 +74,19 @@ export const fetchCampusThunk = (id) => async (dispatch) => {  // The THUNK
   }
 };
 
+// Unenroll Student
+// THUNK CREATOR:
+export const unenrollStudentThunk = (studentId) => async (dispatch) => {  // The THUNK
+  try {
+    // API "put" call to update campus (based on "id" and "student" object's data) from database
+    let res = await axios.put(`/api/students/${studentId}`, {campusId: null}); 
+    // Update successful so change state with dispatch
+    dispatch(ac.editStudent(res.data));
+  } catch(err) {
+    console.error(err);
+  }
+};
+
 // All Students
 // THUNK CREATOR:
 export const fetchAllStudentsThunk = () => async (dispatch) => {  // The THUNK
