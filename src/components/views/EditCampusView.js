@@ -25,7 +25,7 @@ const useStyles = makeStyles( () => ({
   },
 }));
 
-const EditCampusView = (props) => ({ handleChange, handleSubmit, errors }) => {
+const EditCampusView = ({ handleChange, handleSubmit, errors, campus }) => {
   const classes = useStyles();
 
   // Render a New Campus view with an input form
@@ -51,7 +51,7 @@ const EditCampusView = (props) => ({ handleChange, handleSubmit, errors }) => {
                 <input 
                     type="text" 
                     name="name" 
-                    value={campusId.name} // controlled input: always reflects current state / stored value
+                    value={campus.name} // controlled input: always reflects current state / stored value
                     onChange ={(e) => handleChange(e)} 
                     placeholder="required"
                 />
@@ -64,7 +64,7 @@ const EditCampusView = (props) => ({ handleChange, handleSubmit, errors }) => {
                 <input 
                     type="text" 
                     name="imageUrl" 
-                    value={campusId.imageUrl} // controlled input: always reflects current state / stored value
+                    value={campus.imageUrl} // controlled input: always reflects current state / stored value
                     onChange ={(e) => handleChange(e)} 
                     placeholder='optional'
                 />
@@ -76,7 +76,7 @@ const EditCampusView = (props) => ({ handleChange, handleSubmit, errors }) => {
                 <input 
                     type="text" 
                     name="address" 
-                    value={campusId.address} // controlled input: always reflects current state / stored value
+                    value={campus.address} // controlled input: always reflects current state / stored value
                     onChange ={(e) => handleChange(e)} 
                     placeholder='required'
                 />
@@ -89,7 +89,7 @@ const EditCampusView = (props) => ({ handleChange, handleSubmit, errors }) => {
                 <input 
                     type="text" 
                     name="description" 
-                    value={campusId.description} // controlled input: always reflects current state / stored value
+                    value={campus.description} // controlled input: always reflects current state / stored value
                     onChange ={(e) => handleChange(e)} 
                     placeholder='Enter Description Here'
                 />
