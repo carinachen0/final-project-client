@@ -130,7 +130,7 @@ class EditCampusContainer extends Component {
         <EditCampusView
           handleChange = {this.handleChange}
           handleSubmit = {this.handleSubmit}
-          campus = {this.props.campus}
+          campusData = {this.state}
           errors={this.state.errors}
         />
       </div>
