@@ -7,6 +7,7 @@ It constructs a React component to display the new student page.
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { useLocation } from "react-router-dom";
 
 // Create styling for the input form
 const useStyles = makeStyles( () => ({
@@ -35,8 +36,11 @@ const useStyles = makeStyles( () => ({
 }));
 
 const NewStudentView = (props) => {
-  const {handleChange, handleSubmit } = props;
+  const {handleChange, handleSubmit, errors, studentData } = props;
   const classes = useStyles();
+  // Get ?campusId=___ from the URL
+  const search = useLocation().search;
+  const campusId = new URLSearchParams(search).get("campusId");
 
   // Render a New Student view with an input form
   return (
@@ -52,32 +56,44 @@ const NewStudentView = (props) => {
           </div>
           <form style={{textAlign: 'center'}} onSubmit={(e) => handleSubmit(e)}>
             <label style= {{color:'#11153e', fontWeight: 'bold'}}>First Name: </label>
-            <input type="text" name="firstname" onChange ={(e) => handleChange(e)} />
+            <input type="text" name="firstname" 
+            value={studentData.firstname} // controlled input: always reflects current state / stored value
+            onChange ={(e) => handleChange(e)} placeholder="required"/> 
+            {errors.firstname && <p style={{ color: 'red' }}>{errors.firstname}</p>}
             <br/>
             <br/>
 
             <label style={{color:'#11153e', fontWeight: 'bold'}}>Last Name: </label>
-            <input type="text" name="lastname" onChange={(e) => handleChange(e)} />
+            <input 
+              type="text" 
+              name="lastname" 
+              value={studentData.lastname} // controlled input: always reflects current state / stored value
+              onChange={(e) => handleChange(e)} 
+              placeholder="required"
+            />
+            {errors.lastname && <p style={{ color: 'red' }}>{errors.lastname}</p>}
             <br/>
             <br/>
 
             <label style={{color:'#11153e', fontWeight: 'bold'}}>Email: </label>
-            <input type="text" name="email" onChange={(e) => handleChange(e)} />
+            <input type="text" name="email" onChange={(e) => handleChange(e)} placeholder="required (unique)" />
+            {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
             <br/>
             <br/>
 
             <label style={{color:'#11153e', fontWeight: 'bold'}}>Image URL: </label>
-            <input type="text" name="imageUrl" onChange={(e) => handleChange(e)} />
+            <input type="text" name="imageUrl" value={studentData.imageUrl} onChange={(e) => handleChange(e)} placeholder='optional' />
             <br/>
             <br/>
 
             <label style={{color:'#11153e', fontWeight: 'bold'}}>GPA: </label>
-            <input type="text" name="gpa" onChange={(e) => handleChange(e)} />
+            <input type="text" name="gpa" value={studentData.gpa} onChange={(e) => handleChange(e)} />
+            {errors.gpa && <p style={{ color: 'red' }}>{errors.gpa}</p>}
             <br/>
             <br/>
 
             <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Id: </label>
-            <input type="text" name="campusId" onChange={(e) => handleChange(e)} />
+            <input type="text" name="campusId" value={studentData.campusId} onChange={(e) => handleChange(e)} />
             <br/>
             <br/>
 
